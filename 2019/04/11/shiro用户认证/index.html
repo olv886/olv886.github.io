@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>springboot之shiro用户认证和rememberMe功能实现 | blogs | share &amp; learn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="springboot,shiro">
+    <meta name="description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
+<meta name="keywords" content="springboot,shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot之shiro用户认证和rememberMe功能实现">
+<meta property="og:url" content="http://yoursite.com/2019/04/11/shiro用户认证/index.html">
+<meta property="og:site_name" content="blogs">
+<meta property="og:description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/loginfail.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/nostatus.png">
+<meta property="og:updated_time" content="2019-04-12T07:22:25.158Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springboot之shiro用户认证和rememberMe功能实现">
+<meta name="twitter:description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/loginfail.png">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">haha</h5>
+          <a href="mailto:your email" title="your email" class="mail">your email</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/olv886" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.baidu.com">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">springboot之shiro用户认证和rememberMe功能实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">springboot之shiro用户认证和rememberMe功能实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-11T08:11:18.000Z" itemprop="datePublished" class="page-time">
+  2019-04-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/shiro/">shiro</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#shiro用户认证"><span class="post-toc-number">1.</span> <span class="post-toc-text">shiro用户认证</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入相关依赖"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">引入相关依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义shiroconfig类"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">定义shiroconfig类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Realm"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Realm</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置文件application-yml"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">配置文件application.yml</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义数据库"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">定义数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义实体类"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">定义实体类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#启动项目访问："><span class="post-toc-number">1.7.</span> <span class="post-toc-text">启动项目访问：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#rememberMe功能的实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">rememberMe功能的实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改shiroconfig"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">修改shiroconfig</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改权限配置"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">修改权限配置</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-shiro用户认证" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">springboot之shiro用户认证和rememberMe功能实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-11 16:11:18" datetime="2019-04-11T08:11:18.000Z" itemprop="datePublished">2019-04-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/shiro/">shiro</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="shiro用户认证"><a href="#shiro用户认证" class="headerlink" title="shiro用户认证"></a>shiro用户认证</h1><p>springboot集成shiro的用户认证过程如下：</p>
+<ol>
+<li>定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。</li>
+<li>SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。</li>
+<li>realm，用于身份认证和权限验证，需要实现doGetAuthorizationInfo() 和 doGetAuthenticationInfo() 方法。</li>
+</ol>
+<h2 id="引入相关依赖"><a href="#引入相关依赖" class="headerlink" title="引入相关依赖"></a>引入相关依赖</h2><p>引入shiro、数据源，mybatis依赖，</p>
+<pre><code>&lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;!-- shiro-spring --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;
+        &lt;artifactId&gt;shiro-spring&lt;/artifactId&gt;
+        &lt;version&gt;1.4.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;1.3.1&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- druid数据源驱动 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+        &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;1.1.10&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;/dependency&gt;
+</code></pre><h2 id="定义shiroconfig类"><a href="#定义shiroconfig类" class="headerlink" title="定义shiroconfig类"></a>定义shiroconfig类</h2><pre><code>@Configuration
+public class ShiroConfig {
+    /**
+     * springboot之shiro用户认证 处理拦截资源文件问题。
+     * 注意：单独一个ShiroFilterFactoryBean配置是报错的，因为在 初始化ShiroFilterFactoryBean的时候需要注入：SecurityManager
+     *
+     Filter Chain定义说明
+     1、一个URL可以配置多个Filter，使用逗号分隔
+     2、当设置多个过滤器时，全部验证通过，才视为通过
+     3、部分过滤器可指定参数，如perms，roles
+     *
+     */
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setLoginUrl(&quot;/login&quot;);
+        shiroFilterFactoryBean.setSuccessUrl(&quot;/index&quot;);
+        shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/403&quot;);
+
+    LinkedHashMap&lt;String, String&gt; filterChainDefinitionMap = new LinkedHashMap&lt;&gt;();
+  //  anon:所有url都都可以匿名访问;  authc: 需要认证才能进行访问; user:配置记住我或认证通过可以访问；
+    filterChainDefinitionMap.put(&quot;/css/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/js/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/fonts/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/img/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/druid/**&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/logout&quot;, &quot;logout&quot;);
+    filterChainDefinitionMap.put(&quot;/&quot;, &quot;anon&quot;);
+    filterChainDefinitionMap.put(&quot;/**&quot;, &quot;authc&quot;);
+
+    shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+    return shiroFilterFactoryBean;
+}
+
+@Bean
+public SecurityManager securityManager(){
+    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    securityManager.setRealm(shiroRealm());
+    return securityManager;
+}
+
+@Bean
+public ShiroRealm shiroRealm(){
+    ShiroRealm shiroRealm = new ShiroRealm();
+    return shiroRealm;
+}
+}
+</code></pre><p>过滤链filterchain基于短路机制，是最先匹配原则；<br>anon:所有url都可以匿名访问;<br>authc: 需要认证才能进行访问;<br>user:配置记住我或认证通过可以访问；<br>其中，shiro已实现anon,authc…</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">FilterNmae</th>
+<th style="text-align:left">class</th>
+<th style="text-align:left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">anon</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authc.AnonymousFilter</td>
+<td style="text-align:left">匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；示例 /static/**=anon</td>
+</tr>
+<tr>
+<td style="text-align:left">authc</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authc.FormAuthenticationFilter</td>
+<td style="text-align:left">基于表单的拦截器；如 /**=authc ，如果没有登录会跳到相应的登录页面登录</td>
+</tr>
+<tr>
+<td style="text-align:left">user</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authc.UserFilter</td>
+<td style="text-align:left">用户拦截器，用户已经身份验证/记住我登录的都可；示例 /**=user</td>
+</tr>
+<tr>
+<td style="text-align:left">authcBasic</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter</td>
+<td style="text-align:left">Basic HTTP身份验证拦截器</td>
+</tr>
+<tr>
+<td style="text-align:left">logout</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authc.LogoutFilter</td>
+<td style="text-align:left">退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/），示例 /logout=logout</td>
+</tr>
+<tr>
+<td style="text-align:left">role</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authz.RolesAuthorizationFilter</td>
+<td style="text-align:left">角色授权拦截器，验证用户是否拥有所有角色；示例 /admin/**=roles[admin]</td>
+</tr>
+<tr>
+<td style="text-align:left">noSessionCreation</td>
+<td style="text-align:left">org.apache.shiro.web..filter.session.NoSessionCreationFilter</td>
+<td style="text-align:left">不创建会话拦截器，调用 subject.getSession(false) 不会有什么问题，但是如果 subject.getSession(true) 将抛出 DisabledSessionException 异常</td>
+</tr>
+<tr>
+<td style="text-align:left">perms</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter</td>
+<td style="text-align:left">权限授权拦截器，验证用户是否拥有所有权限；属性和roles一样；示例 /user/**=perms[“user:create”]</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authz.PortFilter</td>
+<td style="text-align:left">端口拦截器，主要属性 port(80) ：可以通过的端口；示例 /test= port[80] ，如果用户访问该页面是非80，将自动将请求端口改为80并重定向到该80端口，其他路径/参数等都一样</td>
+</tr>
+<tr>
+<td style="text-align:left">rest</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter</td>
+<td style="text-align:left">rest风格拦截器，自动根据请求方法构建权限字符串；示例 /users=rest[user] ，会自动拼出user:read,user:create,user:update,user:delete权限字符串进行权限匹配（所有都得匹配，isPermittedAll）</td>
+</tr>
+<tr>
+<td style="text-align:left">ssl</td>
+<td style="text-align:left">org.apache.shiro.web.filter.authz.SslFilter</td>
+<td style="text-align:left">SSL拦截器，只有请求协议是https才能通过；否则自动跳转会https端口443；其他和port拦截器一样；</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Realm"><a href="#Realm" class="headerlink" title="Realm"></a>Realm</h2><p>自定义Realm实现只需继承AuthorizingRealm类，然后实现doGetAuthorizationInfo()和doGetAuthenticationInfo()方法即可。这两个方法名乍看有点像，doGetAuthorizationInfo()获取用户的角色和权限等信息,doGetAuthenticationInfo()进行身份验证，即登录时验证用户的合法性，比如验证用户名和密码。</p>
+<p>Shiro的认证过程会交由Realm执行，会调用Realm的getAuthenticationInfo(token)方法。</p>
+<p>该方法主要执行逻辑如下:</p>
+<p>1、检查提交的进行认证的令牌信息</p>
+<p>2、根据令牌信息从数据源(通常为数据库)中获取用户信息</p>
+<p>3、对用户信息进行匹配验证。</p>
+<p>4、验证通过将返回一个封装了用户信息的AuthenticationInfo实例。</p>
+<p>5、验证失败则抛出AuthenticationException异常信息。</p>
+<pre><code>/**
+ * 登录认证
+ */
+@Override
+protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+
+    String userName  = (String) token.getPrincipal();
+    String password = new String((char[]) token.getCredentials()) ;
+  //  password= MD5Utils.encrypt(userName,password);
+    System.out.println(&quot;用户&quot; + userName + &quot;认证-----ShiroRealm.doGetAuthenticationInfo&quot; +&quot;password: &quot;+password);
+    User user = userMapper.findByUserName(userName);
+
+
+    if(user == null){
+        throw new UnknownAccountException(&quot;用户名或密码错误！&quot;);
+    }
+    if (!password.equals(user.getPassword())) {
+        throw new IncorrectCredentialsException(&quot;用户名或密码错误！&quot;);
+    }
+    if (user.getStatus().equals(&quot;0&quot;)) {
+        throw new LockedAccountException(&quot;账号已被锁定,请联系管理员！&quot;);
+    }
+    SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+    return info;
+
+}
+</code></pre><h2 id="配置文件application-yml"><a href="#配置文件application-yml" class="headerlink" title="配置文件application.yml"></a>配置文件application.yml</h2><pre><code>spring:
+  datasource:
+    # 数据库访问配置, 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shiro
+    username: root
+    password: root
+    # 连接池配置
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    # 连接等待超时时间
+    max-wait: 30000
+    # 配置检测可以关闭的空闲连接间隔时间
+    time-between-eviction-runs-millis: 60000
+    # 配置连接在池中的最小生存时间
+    min-evictable-idle-time-millis: 300000
+    validation-query: select &apos;1&apos; from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+
+ thymeleaf:
+  cache: false
+mybatis:
+  # type-aliases扫描路径
+  type-aliases-package: com.springboot.shiro.entity
+  # mapper xml实现扫描路径
+  mapper-locations: classpath:mapper/*.xml
+  property:
+   order: BEFORE
+</code></pre><h2 id="定义数据库"><a href="#定义数据库" class="headerlink" title="定义数据库"></a>定义数据库</h2><p>创建t_user表<br>    USE <code>shiro</code>;</p>
+<pre><code>/*Table structure for table `t_user` */
+
+DROP TABLE IF EXISTS `t_user`;
+
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(25) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `create_time` date DEFAULT NULL,
+  `status` varchar(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_user` */
+
+insert  into `t_user`(`id`,`username`,`password`,`create_time`,`status`) values (1,&apos;admin&apos;,&apos;9f953fb5518da53fe1dc83f47861cb6d&apos;,&apos;2019-04-11&apos;,&apos;1&apos;),(2,&apos;test&apos;,&apos;d655eb5f87c32223e3d037b760a0341d&apos;,&apos;2019-04-11&apos;,&apos;0&apos;);
+</code></pre><h2 id="定义实体类"><a href="#定义实体类" class="headerlink" title="定义实体类"></a>定义实体类</h2><p>定义实体user类</p>
+<pre><code>public class User {
+    private Integer id;
+    private String userName;
+    private String password;
+    private Date createTime;
+    private String status;
+
+    //get/set方法
+}
+</code></pre><p>定义logincontroller类</p>
+<pre><code>@PostMapping(&quot;/login&quot;)
+@ResponseBody
+public ActionResult login(String username,String password){
+    password = MD5Utils.encrypt(username,password);
+    UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+
+    Subject subject = SecurityUtils.getSubject();
+
+    try {
+        subject.login(token);
+        return ActionResult.ok();
+    } catch (UnknownAccountException e) {
+        return ActionResult.error(e.getMessage());
+    } catch (IncorrectCredentialsException e) {
+        return ActionResult.error(e.getMessage());
+    } catch (LockedAccountException e) {
+        return ActionResult.error(e.getMessage());
+    }catch (AuthenticationException e) {
+        return ActionResult.error(&quot;认证失败&quot;);
+
+    }
+
+}
+</code></pre><p>编写页面login.html、index.html页面等。</p>
+<h2 id="启动项目访问："><a href="#启动项目访问：" class="headerlink" title="启动项目访问："></a>启动项目访问：</h2><p>地址：<a href="http://localhost:8080/login" target="_blank" rel="noopener">http://localhost:8080/login</a></p>
+<p>账号或密码错误提示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="pic/loginfail.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>账号锁定提示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="pic/nostatus.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>登录成功后直接跳转到index界面。</p>
+<h1 id="rememberMe功能的实现"><a href="#rememberMe功能的实现" class="headerlink" title="rememberMe功能的实现"></a>rememberMe功能的实现</h1><p>shiro提供了rememberMe功能，就是在登录页面加上记住检验框，用户勾选记住登录后，实质上是添加了一个本地的cookie，关闭浏览器后再访问就不用进行重新登录：</p>
+<pre><code>&lt;p&gt;&lt;input type=&quot;checkbox&quot; name=&quot;rememberMe&quot;/&gt;记住我&lt;/p&gt;
+</code></pre><h2 id="修改shiroconfig"><a href="#修改shiroconfig" class="headerlink" title="修改shiroconfig"></a>修改shiroconfig</h2><p>在shiroconfig类中添加rememberMeManager对象，再讲cookie管理对象注入到securityManager中，</p>
+<pre><code>public SimpleCookie rememberMeCookie(){
+    System.out.println(&quot;ShiroConfig +rememberMeCookie()&quot; );
+    // 设置cookie名称，对应login.html页面的&lt;input type=&quot;checkbox&quot; name=&quot;rememberMe&quot;/&gt;
+    SimpleCookie cookie = new SimpleCookie(&quot;rememberMe&quot;);
+ //   cookie.setName(&quot;shiroCookie&quot;);
+    cookie.setMaxAge(86400);
+    return cookie;
+}
+
+public CookieRememberMeManager rememberMeManager(){
+    System.out.println(&quot;ShiroConfig +rememberMeManager()&quot; );
+    CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+    cookieRememberMeManager.setCookie(rememberMeCookie());
+    return cookieRememberMeManager;
+}
+
+@Bean
+public SecurityManager securityManager(){
+    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    securityManager.setRealm(shiroRealm());
+    securityManager.setRememberMeManager(rememberMeManager());
+    return securityManager;
+}
+</code></pre><h2 id="修改权限配置"><a href="#修改权限配置" class="headerlink" title="修改权限配置"></a>修改权限配置</h2><p>修改shiroFilterFactoryBean中的权限过滤，修改authc为user，即用户通过认证或勾选了rememberMe之后记住用户的信息，直接可以访问，主要修改以下两项，用户可以直接index页面</p>
+<pre><code>//配置记住我事调用 user
+  filterChainDefinitionMap.put(&quot;/index&quot;,&quot;user&quot;);
+  filterChainDefinitionMap.put(&quot;/&quot;,&quot;user&quot;);
+</code></pre><p>最后在登录页面添加</p>
+<pre><code>&lt;input type=&quot;checkbox&quot; name=&quot;rememberMe&quot;/&gt;记住我
+</code></pre><p>和修改对应的logincontroller即可实现。</p>
+<p>参考:</p>
+<p><a href="https://412887952-qq-com.iteye.com/blog/2299777" title="Spring Boot Shiro权限管理" target="_blank" rel="noopener">springbootshiro权限管理</a></p>
+<p><a href="https://mrbird.cc/Spring-Boot-shiro%20Authentication.html" title="Spring Boot Shiro用户认证" target="_blank" rel="noopener">SpringBoot Shiro用户认证 </a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-04-12T07:22:25.158Z" itemprop="dateUpdated">2019-04-12 15:22:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/04/11/shiro用户认证/" target="_blank" rel="external">http://yoursite.com/2019/04/11/shiro用户认证/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="haha">
+            haha
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shiro/">shiro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro用户认证/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/04/shiro/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Apache shiro简介</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: '8023b681985509e8f34e',
+          clientSecret: 'f08497329dc1121fb8d09c9f7842b595b6bca025',
+          repo: 'olv886.github.io',
+          owner: 'olv886',
+          admin: ['olv886'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        打赏一下~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>haha &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro用户认证/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/04/11/shiro用户认证/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'haha blog！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

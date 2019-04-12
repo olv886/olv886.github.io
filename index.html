@@ -67,28 +67,21 @@
             <li class="waves-block waves-effect active">
               <a href="/">
                 <i class="icon icon-lg icon-home"></i>
-                主页
+                Home
               </a>
             </li>
         
             <li class="waves-block waves-effect">
               <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
-                归档
+                Archives
               </a>
             </li>
         
             <li class="waves-block waves-effect">
               <a href="/tags">
                 <i class="icon icon-lg icon-tags"></i>
-                标签
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories">
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
+                Tags
               </a>
             </li>
         
@@ -100,7 +93,7 @@
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/custom">
+              <a href="https://www.baidu.com">
                 <i class="icon icon-lg icon-link"></i>
                 测试
               </a>
@@ -155,6 +148,56 @@
 <div class="container body-wrap">
 
     <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-shiro用户认证" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-04-11 16:11:18" datetime="2019-04-11T08:11:18.000Z" itemprop="datePublished">2019-04-11</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/shiro/">shiro</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2019/04/11/shiro用户认证/">springboot之shiro用户认证和rememberMe功能实现</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        shiro用户认证springboot集成shiro的用户认证过程如下：
+
+定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。
+SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。
+re...
+    
+
+        <a href="/2019/04/11/shiro用户认证/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shiro/">shiro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
     
         <li class="post-list-item fade">
             <article id="post-shiro" class="article-card article-type-post" itemprop="blogPost">
@@ -420,7 +463,7 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
     var OriginTitile = document.title, titleTime;
     document.addEventListener('visibilitychange', function() {
         if (document.hidden) {
-            document.title = 'olv blog！';
+            document.title = 'haha blog！';
             clearTimeout(titleTime);
         } else {
             document.title = '(つェ⊂)咦!又好了!';
