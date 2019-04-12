@@ -20,22 +20,22 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="springboot,shiro">
+    <meta name="keywords" content="shiro,springboot">
     <meta name="description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
-<meta name="keywords" content="springboot,shiro">
+<meta name="keywords" content="shiro,springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot之shiro用户认证和rememberMe功能实现">
-<meta property="og:url" content="http://yoursite.com/2019/04/11/shiro用户认证/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/04/11/shiro-user-authen/index.html">
 <meta property="og:site_name" content="blogs">
 <meta property="og:description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/loginfail.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/nostatus.png">
-<meta property="og:updated_time" content="2019-04-12T07:22:25.158Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro-user-authen/loginfail.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/11/shiro-user-authen/nostatus.png">
+<meta property="og:updated_time" content="2019-04-12T08:20:12.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot之shiro用户认证和rememberMe功能实现">
 <meta name="twitter:description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/11/shiro用户认证/pic/loginfail.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/11/shiro-user-authen/loginfail.png">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -120,7 +120,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -166,7 +166,7 @@
     </aside>
 
 
-<article id="post-shiro用户认证" class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-shiro-user-authen" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
         <h1 class="post-card-title">springboot之shiro用户认证和rememberMe功能实现</h1>
@@ -459,7 +459,7 @@ public ActionResult login(String username,String password){
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="pic/loginfail.png" alt title>
+                    <img src="/2019/04/11/shiro-user-authen/loginfail.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -467,7 +467,7 @@ public ActionResult login(String username,String password){
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="pic/nostatus.png" alt title>
+                    <img src="/2019/04/11/shiro-user-authen/nostatus.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
@@ -516,12 +516,12 @@ public SecurityManager securityManager(){
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-04-12T07:22:25.158Z" itemprop="dateUpdated">2019-04-12 15:22:25</time>
+    最終更新：<time datetime="2019-04-12T08:20:12.489Z" itemprop="dateUpdated">2019-04-12 16:20:12</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/04/11/shiro用户认证/" target="_blank" rel="external">http://yoursite.com/2019/04/11/shiro用户认证/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/04/11/shiro-user-authen/" target="_blank" rel="external">http://yoursite.com/2019/04/11/shiro-user-authen/</a>
         
     </div>
     
@@ -552,7 +552,7 @@ public SecurityManager securityManager(){
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro-user-authen/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -562,22 +562,22 @@ public SecurityManager securityManager(){
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro-user-authen/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro-user-authen/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro用户认证/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro-user-authen/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro-user-authen/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -703,7 +703,7 @@ public SecurityManager securityManager(){
 
         <p>
             
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
         </p>
     </div>
     <div class="bottom">
@@ -725,7 +725,7 @@ public SecurityManager securityManager(){
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/11/shiro-user-authen/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -735,22 +735,22 @@ public SecurityManager securityManager(){
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro用户认证/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/11/shiro-user-authen/&title=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/11/shiro-user-authen/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro用户认证/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之shiro用户认证和rememberMe功能实现》 — blogs&url=http://yoursite.com/2019/04/11/shiro-user-authen/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro用户认证/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/11/shiro-user-authen/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -761,7 +761,7 @@ public SecurityManager securityManager(){
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/04/11/shiro用户认证/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/04/11/shiro-user-authen/" alt="微信分享二维码">
 </div>
 
 
