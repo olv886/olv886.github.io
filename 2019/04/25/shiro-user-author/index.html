@@ -21,19 +21,19 @@
     
     
     <meta name="keywords" content="shiro,springboot">
-    <meta name="description" content="# shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问">
+    <meta name="description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问控制">
 <meta name="keywords" content="shiro,springboot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot之用户权限认证">
 <meta property="og:url" content="http://yoursite.com/2019/04/25/shiro-user-author/index.html">
 <meta property="og:site_name" content="blogs">
-<meta property="og:description" content="# shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问">
+<meta property="og:description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问控制">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/04/25/shiro-user-author/error.png">
-<meta property="og:updated_time" content="2019-04-29T08:21:30.379Z">
+<meta property="og:updated_time" content="2019-04-29T08:25:24.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot之用户权限认证">
-<meta name="twitter:description" content="# shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问">
+<meta name="twitter:description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 数据库设计shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访问控制">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/25/shiro-user-author/error.png">
     
     <link rel="shortcut icon" href="/favicon.ico">
@@ -119,7 +119,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -160,7 +160,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#shiro权限控制"><span class="post-toc-number">1.</span> <span class="post-toc-text"># shiro权限控制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据库设计"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">数据库设计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构建role实体类和permission实体类及相应的dao"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">构建role实体类和permission实体类及相应的dao</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xml实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">xml实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#shiroConfig的实现"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">shiroConfig的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#controller实现"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">controller实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis实现权限的缓存"><span class="post-toc-number">2.</span> <span class="post-toc-text">Redis实现权限的缓存</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入Redis依赖"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">引入Redis依赖</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#shiro权限控制"><span class="post-toc-number">1.</span> <span class="post-toc-text">shiro权限控制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据库设计"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">数据库设计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构建role实体类和permission实体类及相应的dao"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">构建role实体类和permission实体类及相应的dao</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xml实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">xml实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现shiroRealm访问控制"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">实现shiroRealm访问控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#shiroConfig的实现"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">shiroConfig的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#controller实现"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">controller实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis实现权限的缓存"><span class="post-toc-number">2.</span> <span class="post-toc-text">Redis实现权限的缓存</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入Redis依赖"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">引入Redis依赖</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -185,7 +185,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="shiro权限控制"><a href="#shiro权限控制" class="headerlink" title="# shiro权限控制"></a># shiro权限控制</h1><p>shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。</p>
+            <h1 id="shiro权限控制"><a href="#shiro权限控制" class="headerlink" title="shiro权限控制"></a>shiro权限控制</h1><p>shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。</p>
 <h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p>shiro权限控制中，有三个核心元素，用户、角色、权限，使用<strong>RBAC</strong>（Role-Based Access Control，<strong>基于角色的访问控制</strong>）模型设计用户，角色和权限间的关系。不同的角色拥有不同的访问权限，再通过把角色赋予给用户实现用户访问权限的控制。</p>
 <p>三张基本表：用户表t_user、角色表t_role、权限表t_permission</p>
 <p>两张关系表：用户和角色关系表：t_user_role,角色权限表：t_role_permission</p>
@@ -304,7 +304,7 @@ public interface UserPermissionMapper {
         where u.username = #{userName}
     &lt;/select&gt;
 &lt;/mapper&gt;
-</code></pre><p>##<br>实现shiroRealm访问控制 ##<br>角色的权限控制是有 doGetAuthorizationInfo()实现的，</p>
+</code></pre><h2 id="实现shiroRealm访问控制"><a href="#实现shiroRealm访问控制" class="headerlink" title="实现shiroRealm访问控制"></a>实现shiroRealm访问控制</h2><p>角色的权限控制是有 doGetAuthorizationInfo()实现的，</p>
 <pre><code>/**
  * 获取用户角色和权限
  */
@@ -487,7 +487,7 @@ public SecurityManager securityManager(){
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2019-04-29T08:21:30.379Z" itemprop="dateUpdated">2019-04-29 16:21:30</time>
+    Last updated: <time datetime="2019-04-29T08:25:24.708Z" itemprop="dateUpdated">2019-04-29 16:25:24</time>
 </span><br>
 
 
@@ -674,7 +674,7 @@ public SecurityManager securityManager(){
 
         <p>
             
-            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
         </p>
     </div>
     <div class="bottom">
