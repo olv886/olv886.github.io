@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>springboot之用户权限认证 | blogs | share &amp; learn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="springboot,shiro">
+    <meta name="description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 ##数据库设计 shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访">
+<meta name="keywords" content="springboot,shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot之用户权限认证">
+<meta property="og:url" content="http://yoursite.com/2019/04/25/shiro-user-author/index.html">
+<meta property="og:site_name" content="blogs">
+<meta property="og:description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 ##数据库设计 shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/04/25/shiro-user-author/error.png">
+<meta property="og:updated_time" content="2019-04-25T08:21:29.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springboot之用户权限认证">
+<meta name="twitter:description" content="shiro权限控制shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。 ##数据库设计 shiro权限控制中，有三个核心元素，用户、角色、权限，使用RBAC（Role-Based Access Control，基于角色的访">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/25/shiro-user-author/error.png">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">haha</h5>
+          <a href="mailto:undefined" class="mail">
+        </a></hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/shiro">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/olv886" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.baidu.com">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">springboot之用户权限认证</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">springboot之用户权限认证</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-25T06:26:44.000Z" itemprop="datePublished" class="page-time">
+  2019-04-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/shiro/">shiro</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#shiro权限控制"><span class="post-toc-number">1.</span> <span class="post-toc-text">shiro权限控制</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-shiro-user-author" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">springboot之用户权限认证</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-25 14:26:44" datetime="2019-04-25T06:26:44.000Z" itemprop="datePublished">2019-04-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/shiro/">shiro</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="shiro权限控制"><a href="#shiro权限控制" class="headerlink" title="shiro权限控制"></a>shiro权限控制</h1><p>shiro权限控制的实现，是由类ShiroRealm继承抽象类AuthorizingRealm实现doGetAuthorizationInfo()方法。授权即为访问控制，根据不同用户所拥有的不同角色，对每个角色进行访问资源的控制。</p>
+<p>##数据库设计</p>
+<p>shiro权限控制中，有三个核心元素，用户、角色、权限，使用<strong>RBAC</strong>（Role-Based Access Control，<strong>基于角色的访问控制</strong>）模型设计用户，角色和权限间的关系。不同的角色拥有不同的访问权限，再通过把角色赋予给用户实现用户访问权限的控制。</p>
+<p>三张基本表：用户表t_user、角色表t_role、权限表t_permission</p>
+<p>两张关系表：用户和角色关系表：t_user_role,角色权限表：t_role_permission</p>
+<pre><code>DROP TABLE IF EXISTS `t_permission`;
+
+CREATE TABLE `t_permission` (
+  `id` int(11) NOT NULL,
+  `url` varchar(256) DEFAULT NULL,
+  `description` varchar(64) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `t_permission`(`id`,`url`,`description`) values (1,&apos;/user&apos;,&apos;user:user&apos;),(2,&apos;/user/add&apos;,&apos;user:add&apos;),(1,&apos;/user/delete&apos;,&apos;user:delete&apos;);
+
+DROP TABLE IF EXISTS `t_role`;
+
+CREATE TABLE `t_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rolename` varchar(32) DEFAULT NULL,
+  `description` varchar(32) DEFAULT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+insert  into `t_role`(`id`,`rolename`,`description`) values (1,&apos;admin&apos;,&apos;超级管理员&apos;),(2,&apos;test&apos;,&apos;测试账户&apos;);
+
+DROP TABLE IF EXISTS `t_role_permision`;
+
+CREATE TABLE `t_role_permision` (
+  `role_id` int(12) DEFAULT NULL,
+  `permission_id` int(12) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `t_role_permision`(`role_id`,`permission_id`) values (1,1),(1,2),(1,3),(2,1);
+
+DROP TABLE IF EXISTS `t_user`;
+
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(25) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `create_time` date DEFAULT NULL,
+  `status` varchar(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `t_user`(`id`,`username`,`password`,`create_time`,`status`) values (1,&apos;admin&apos;,&apos;9f953fb5518da53fe1dc83f47861cb6d&apos;,&apos;2019-04-11&apos;,&apos;1&apos;),(2,&apos;test&apos;,&apos;d655eb5f87c32223e3d037b760a0341d&apos;,&apos;2019-04-11&apos;,&apos;0&apos;);
+
+DROP TABLE IF EXISTS `t_user_role`;
+
+CREATE TABLE `t_user_role` (
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `t_user_role`(`user_id`,`role_id`) values (1,1),(2,2);
+</code></pre><p>##构建role实体类和permission实体类及相应的dao</p>
+<pre><code>public class Role implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Integer id ;
+    private String roleName;
+    private String description;
+    //set/geter方法
+}
+
+@Mapper
+public interface UserRoleMapper {
+    List&lt;Role&gt; findByUserName(String userNmae);
+}
+
+
+public class Permission implements Serializable {
+    private  static  final long serialVersionUID = 1L;
+    private Integer id;
+    private String url;
+    private String permission;
+    //set/geter方法
+}
+
+@Mapper
+public interface UserPermissionMapper {
+    List&lt;Permission&gt; findByUserName(String userName);
+}
+</code></pre><p>##xml实现</p>
+<p>UserRoleMapper实现查询</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.springboot.shiro.dao.UserRoleMapper&quot;&gt;
+
+    &lt;resultMap type=&quot;com.springboot.shiro.entity.Role&quot; id=&quot;role&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;java.lang.Integer&quot; jdbcType=&quot;INTEGER&quot;/&gt;
+        &lt;id column=&quot;rolename&quot; property=&quot;roleName&quot; javaType=&quot;java.lang.String&quot; jdbcType=&quot;VARCHAR&quot;/&gt;
+        &lt;id column=&quot;description&quot; property=&quot;description&quot; javaType=&quot;java.lang.String&quot; jdbcType=&quot;VARCHAR&quot;/&gt;
+    &lt;/resultMap&gt;
+
+    &lt;select id=&quot;findByUserName&quot; resultMap=&quot;role&quot;&gt;
+        select r.id,r.rolename,r.description from t_role r
+        left join t_user_role ur on(r.id = ur.role_id)
+        left join t_user u on(u.id = ur.user_id)
+        where u.username = #{userName}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p>UserPermissionMapper查询实现</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;com.springboot.shiro.dao.UserPermissionMapper&quot;&gt;
+
+    &lt;resultMap type=&quot;com.springboot.shiro.entity.Permission&quot; id=&quot;permission&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;java.lang.Integer&quot; jdbcType=&quot;INTEGER&quot;/&gt;
+        &lt;id column=&quot;url&quot; property=&quot;url&quot; javaType=&quot;java.lang.String&quot; jdbcType=&quot;VARCHAR&quot;/&gt;
+        &lt;id column=&quot;permission&quot; property=&quot;permission&quot; javaType=&quot;java.lang.String&quot; jdbcType=&quot;VARCHAR&quot;/&gt;
+    &lt;/resultMap&gt;
+
+    &lt;select id=&quot;findByUserName&quot; resultMap=&quot;permission&quot;&gt;
+        select p.id,p.url,p.permission from t_role r
+        left join t_user_role ur on(r.id = ur.role_id)
+        left join t_user u on(u.id = ur.user_id)
+        left join t_role_permission rp on(rp.role_id = r.id)
+        left join t_permission p on(p.id = rp.permission_id )
+        where u.username = #{userName}
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre><p>##实现shiroRealm访问控制<br>角色的权限控制是有 doGetAuthorizationInfo()实现的，</p>
+<pre><code>/**
+ * 获取用户角色和权限
+ */
+@Override
+protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
+    User user = (User) SecurityUtils.getSubject().getPrincipal();
+    String userName = user.getUserName();
+    System.out.println(&quot;用户&quot; + userName + &quot;获取权限-----ShiroRealm.doGetAuthorizationInfo&quot;);
+    SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+
+    //获取角色集
+    List&lt;Role&gt; roleList = userRoleMapper.findByUserName(userName);
+    Set&lt;String&gt; roleSet = new HashSet&lt;String&gt;();
+    for (Role r:roleList){
+        roleSet.add(r.getRoleName());
+    }
+    authorizationInfo.setRoles(roleSet);
+    // 获取用户权限集
+    List&lt;Permission&gt; permissionList = userPermissionMapper.findByUserName(userName);
+    Set&lt;String&gt; permissionSet = new HashSet&lt;String&gt;();
+    for (Permission p : permissionList) {
+        permissionSet.add(p.getPermission());
+    }
+    authorizationInfo.setStringPermissions(permissionSet);
+    return authorizationInfo;
+}
+</code></pre><p>通过userRoleMapper.findByUserName(userName)和userPermissionMapper.findByUserName(userName)查询数据库获取角色信息和所对应的权限信息，并存储在SimpleAuthorizationInfo的对象中，返回给shiro。</p>
+<p>##shiroConfig的实现<br>shiro提供了几种和权限相关的注解，</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">注解名</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@RequiresAuthenticatio</td>
+<td style="text-align:center">表示当前Subject已经通过login进行了身份验证；即Subject.isAuthenticated()返回true。</td>
+</tr>
+<tr>
+<td style="text-align:left">@RequiresUser</td>
+<td style="text-align:center">表示当前Subject已经身份验证或者通过记住我登录的</td>
+</tr>
+<tr>
+<td style="text-align:left">@RequiresGuest</td>
+<td style="text-align:center">表示当前Subject没有身份验证或通过记住我登录过，即是游客身份。</td>
+</tr>
+<tr>
+<td style="text-align:left">@RequiresRoles(value={“admin”, “user”}, logical= Logical.AND)</td>
+<td style="text-align:center">表示当前Subject需要角色admin和user。</td>
+</tr>
+<tr>
+<td style="text-align:left">@RequiresPermissions (value={“user:a”, “user:b”}, logical= Logical.OR)</td>
+<td style="text-align:center">表示当前Subject需要权限user:a或user:b</td>
+</tr>
+</tbody>
+</table>
+<p>在shiroconfig中添加如下代码开启注解的使用</p>
+<pre><code>@Bean(name = &quot;lifecycleBeanPostProcessor&quot;)
+public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    return new LifecycleBeanPostProcessor();
+}
+
+/**
+ *DefaultAdvisorAutoProxyCreator 是用来扫描上下文，寻找所有的Advistor(通知器）&lt;@RequiresPermissions(&quot;user:user&quot;)&gt;&lt;/&gt;，将这些Advisor应用到所有符合切入点的Bean中。
+ *  所以必须在lifecycleBeanPostProcessor创建之后创建，所以用了depends-on=”lifecycleBeanPostProcessor”&gt;
+ * @return
+ */
+@Bean
+@DependsOn({&quot;lifecycleBeanPostProcessor&quot;})
+public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
+    DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+    advisorAutoProxyCreator.setProxyTargetClass(true);
+    return advisorAutoProxyCreator;
+}
+
+
+@Bean
+public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+    authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+    return authorizationAttributeSourceAdvisor;
+}
+</code></pre><p>##controller实现<br>编写userController类用户处理用户权限的访问控制：</p>
+<pre><code>@Controller
+@RequestMapping(&quot;/user&quot;)
+public class UserController {
+    @RequiresPermissions(&quot;user:user&quot;)
+    @RequestMapping(&quot;list&quot;)
+    public String userList(Model model){
+        model.addAttribute(&quot;value&quot;,&quot;获取用户信息&quot;);
+        return &quot;user&quot;;
+    }
+
+    @RequiresPermissions(&quot;user:add&quot;)
+    @RequestMapping(&quot;add&quot;)
+    public String userAdd(Model model){
+        model.addAttribute(&quot;value&quot;,&quot;新增用户&quot;);
+        return &quot;user&quot;;
+    }    
+
+    @RequiresPermissions(&quot;user:delete&quot;)
+    @RequestMapping(&quot;delete&quot;)
+    public String userDelete(Model model){
+        model.addAttribute(&quot;value&quot;,&quot;删除用户信息&quot;);
+        return &quot;user&quot;;
+    }
+}
+
+@GetMapping(&quot;/403&quot;)
+public String forbid() {
+    return &quot;403&quot;;
+}
+</code></pre><p>有个小问题，当用户没有权限访问资源时会报错，<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/04/25/shiro-user-author/error.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>虽然在ShiroConfig中配置了 shiroFilterFactoryBean.setUnauthorizedUrl(“/403”); ，没有权限的访问会自动重定向到/403，结果证明并不是这样。后来研究发现，该设置只对filterChain起作用，比如在filterChain中设置了 filterChainDefinitionMap.put(“/user/update”, “perms[user:update]”); ，如果用户没有 user:update 权限，那么当其访问 /user/update 的时候，页面会被重定向到/403。<br>对于上面这个问题，可以定义一个全局异常捕获类：</p>
+<pre><code>@ControllerAdvice
+@Order(value = Ordered.HIGHEST_PRECEDENCE)
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = AuthorizationException.class)
+    public String handleAuthorizationException(){
+        return &quot;403&quot;;
+    }
+}
+</code></pre><p>相关html页面省略，详细请见GitHub。</p>
+<p>#Redis实现权限的缓存<br>上述基本实现权限的访问控制，但还一个需要优化的地方，就是每次查询用户的角色和对应的权限是时，都是实时去查询数据库实现的，一般权限是不会一直变的，直接造成了资源的浪费，添加Redis缓存，把权限存到Redis中，不需要每次都查询数据库。</p>
+<p>##引入Redis依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.crazycake&lt;/groupId&gt;
+    &lt;artifactId&gt;shiro-redis&lt;/artifactId&gt;
+    &lt;version&gt;2.4.2.1-RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p>配置application.yml</p>
+<pre><code>spring
+  redis:
+     host: localhost
+     port: 6379
+     pool:
+       max-active: 8
+       max-wait: -1
+       max-idle: 8
+       min-idle: 0
+     timeout: 0
+</code></pre><p>shiroConfig配置Redis</p>
+<pre><code>/**
+ * 增加权限缓存，
+ * @return
+ */
+public RedisManager redisManager(){
+    RedisManager redisManager = new RedisManager();
+    return redisManager;
+}
+
+public RedisCacheManager cacheManager(){
+    RedisCacheManager redisCacheManager = new RedisCacheManager();
+    redisCacheManager.setRedisManager(redisManager());
+    return redisCacheManager;
+}
+
+@Bean
+public SecurityManager securityManager(){
+    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    securityManager.setRealm(shiroRealm());
+    securityManager.setRememberMeManager(rememberMeManager());
+    securityManager.setCacheManager(cacheManager());
+    return securityManager;
+}
+</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2019-04-25T08:21:29.941Z" itemprop="dateUpdated">2019-04-25 16:21:29</time>
+</span><br>
+
+
+        
+        这里可以写作者留言~
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="haha">
+            haha
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shiro/">shiro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/25/shiro-user-author/&title=《springboot之用户权限认证》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/25/shiro-user-author/&title=《springboot之用户权限认证》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/25/shiro-user-author/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之用户权限认证》 — blogs&url=http://yoursite.com/2019/04/25/shiro-user-author/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/25/shiro-user-author/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/11/shiro-user-authen/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">springboot之shiro用户认证和rememberMe功能实现</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: '8023b681985509e8f34e',
+          clientSecret: 'f08497329dc1121fb8d09c9f7842b595b6bca025',
+          repo: 'olv886.github.io',
+          owner: 'olv886',
+          admin: ['olv886'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        打赏一下~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>haha &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/04/25/shiro-user-author/&title=《springboot之用户权限认证》 — blogs&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/04/25/shiro-user-author/&title=《springboot之用户权限认证》 — blogs&source=学习 分享 springboot springcloud" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/04/25/shiro-user-author/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《springboot之用户权限认证》 — blogs&url=http://yoursite.com/2019/04/25/shiro-user-author/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/04/25/shiro-user-author/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/04/25/shiro-user-author/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'haha blog！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

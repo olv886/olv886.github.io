@@ -20,9 +20,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="shiro,springboot">
+    <meta name="keywords" content="springboot,shiro">
     <meta name="description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
-<meta name="keywords" content="shiro,springboot">
+<meta name="keywords" content="springboot,shiro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot之shiro用户认证和rememberMe功能实现">
 <meta property="og:url" content="http://yoursite.com/2019/04/11/shiro-user-authen/index.html">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/04/11/shiro-user-authen/loginfail.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/11/shiro-user-authen/nostatus.png">
-<meta property="og:updated_time" content="2019-04-12T08:20:12.489Z">
+<meta property="og:updated_time" content="2019-04-25T07:24:05.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot之shiro用户认证和rememberMe功能实现">
 <meta name="twitter:description" content="shiro用户认证springboot集成shiro的用户认证过程如下：  定义一个ShiroConfig类，实现Shiro过滤器工厂类ShiroFilterFactoryBean方法，该方法主要用于处理拦截资源文件，依赖SecurityManager。 SecurityManager为Shiro的安全管理器，管理着所有Subject，主要有身份认证管理，缓存管理，cookie管理等。 realm">
@@ -61,8 +61,8 @@
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">haha</h5>
-          <a href="mailto:your email" title="your email" class="mail">your email</a>
-        </hgroup>
+          <a href="mailto:undefined" class="mail">
+        </a></hgroup>
       </div>
     </div>
     <div class="scroll-wrap flex-col">
@@ -83,7 +83,7 @@
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/tags">
+              <a href="/tags/shiro">
                 <i class="icon icon-lg icon-tags"></i>
                 Tags
               </a>
@@ -273,66 +273,66 @@ public ShiroRealm shiroRealm(){
 <table>
 <thead>
 <tr>
-<th style="text-align:left">FilterNmae</th>
+<th style="text-align:center">FilterNmae</th>
 <th style="text-align:left">class</th>
-<th style="text-align:left">description</th>
+<th style="text-align:center">description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">anon</td>
+<td style="text-align:center">anon</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authc.AnonymousFilter</td>
-<td style="text-align:left">匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；示例 /static/**=anon</td>
+<td style="text-align:center">匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；示例 /static/**=anon</td>
 </tr>
 <tr>
-<td style="text-align:left">authc</td>
+<td style="text-align:center">authc</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authc.FormAuthenticationFilter</td>
-<td style="text-align:left">基于表单的拦截器；如 /**=authc ，如果没有登录会跳到相应的登录页面登录</td>
+<td style="text-align:center">基于表单的拦截器；如 /**=authc ，如果没有登录会跳到相应的登录页面登录</td>
 </tr>
 <tr>
-<td style="text-align:left">user</td>
+<td style="text-align:center">user</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authc.UserFilter</td>
-<td style="text-align:left">用户拦截器，用户已经身份验证/记住我登录的都可；示例 /**=user</td>
+<td style="text-align:center">用户拦截器，用户已经身份验证/记住我登录的都可；示例 /**=user</td>
 </tr>
 <tr>
-<td style="text-align:left">authcBasic</td>
+<td style="text-align:center">authcBasic</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter</td>
-<td style="text-align:left">Basic HTTP身份验证拦截器</td>
+<td style="text-align:center">Basic HTTP身份验证拦截器</td>
 </tr>
 <tr>
-<td style="text-align:left">logout</td>
+<td style="text-align:center">logout</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authc.LogoutFilter</td>
-<td style="text-align:left">退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/），示例 /logout=logout</td>
+<td style="text-align:center">退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/），示例 /logout=logout</td>
 </tr>
 <tr>
-<td style="text-align:left">role</td>
+<td style="text-align:center">role</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authz.RolesAuthorizationFilter</td>
-<td style="text-align:left">角色授权拦截器，验证用户是否拥有所有角色；示例 /admin/**=roles[admin]</td>
+<td style="text-align:center">角色授权拦截器，验证用户是否拥有所有角色；示例 /admin/**=roles[admin]</td>
 </tr>
 <tr>
-<td style="text-align:left">noSessionCreation</td>
+<td style="text-align:center">noSessionCreation</td>
 <td style="text-align:left">org.apache.shiro.web..filter.session.NoSessionCreationFilter</td>
-<td style="text-align:left">不创建会话拦截器，调用 subject.getSession(false) 不会有什么问题，但是如果 subject.getSession(true) 将抛出 DisabledSessionException 异常</td>
+<td style="text-align:center">不创建会话拦截器，调用 subject.getSession(false) 不会有什么问题，但是如果 subject.getSession(true) 将抛出 DisabledSessionException 异常</td>
 </tr>
 <tr>
-<td style="text-align:left">perms</td>
+<td style="text-align:center">perms</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter</td>
-<td style="text-align:left">权限授权拦截器，验证用户是否拥有所有权限；属性和roles一样；示例 /user/**=perms[“user:create”]</td>
+<td style="text-align:center">权限授权拦截器，验证用户是否拥有所有权限；属性和roles一样；示例 /user/**=perms[“user:create”]</td>
 </tr>
 <tr>
-<td style="text-align:left">port</td>
+<td style="text-align:center">port</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authz.PortFilter</td>
-<td style="text-align:left">端口拦截器，主要属性 port(80) ：可以通过的端口；示例 /test= port[80] ，如果用户访问该页面是非80，将自动将请求端口改为80并重定向到该80端口，其他路径/参数等都一样</td>
+<td style="text-align:center">端口拦截器，主要属性 port(80) ：可以通过的端口；示例 /test= port[80] ，如果用户访问该页面是非80，将自动将请求端口改为80并重定向到该80端口，其他路径/参数等都一样</td>
 </tr>
 <tr>
-<td style="text-align:left">rest</td>
+<td style="text-align:center">rest</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter</td>
-<td style="text-align:left">rest风格拦截器，自动根据请求方法构建权限字符串；示例 /users=rest[user] ，会自动拼出user:read,user:create,user:update,user:delete权限字符串进行权限匹配（所有都得匹配，isPermittedAll）</td>
+<td style="text-align:center">rest风格拦截器，自动根据请求方法构建权限字符串；示例 /users=rest[user] ，会自动拼出user:read,user:create,user:update,user:delete权限字符串进行权限匹配（所有都得匹配，isPermittedAll）</td>
 </tr>
 <tr>
-<td style="text-align:left">ssl</td>
+<td style="text-align:center">ssl</td>
 <td style="text-align:left">org.apache.shiro.web.filter.authz.SslFilter</td>
-<td style="text-align:left">SSL拦截器，只有请求协议是https才能通过；否则自动跳转会https端口443；其他和port拦截器一样；</td>
+<td style="text-align:center">SSL拦截器，只有请求协议是https才能通过；否则自动跳转会https端口443；其他和port拦截器一样；</td>
 </tr>
 </tbody>
 </table>
@@ -516,12 +516,12 @@ public SecurityManager securityManager(){
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2019-04-12T08:20:12.489Z" itemprop="dateUpdated">2019-04-12 16:20:12</time>
+    最終更新：<time datetime="2019-04-25T07:24:05.232Z" itemprop="dateUpdated">2019-04-25 15:24:05</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/04/11/shiro-user-authen/" target="_blank" rel="external">http://yoursite.com/2019/04/11/shiro-user-authen/</a>
+        这里可以写作者留言~
         
     </div>
     
@@ -597,7 +597,14 @@ public SecurityManager securityManager(){
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/25/shiro-user-author/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">springboot之用户权限认证</h4>
+      </a>
+    </div>
   
 
   
